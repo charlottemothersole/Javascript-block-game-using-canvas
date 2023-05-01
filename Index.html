@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="'en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device-width, initial-scale-1">
+        <link rel="icon" href="/favicon.ico">
+        <title>Hello!</title>
+        <link rel="stylesheet" href="/style.css">
+        <script src="/script.js" defer></script>
+    </head>
+    <body>
+        <h1>Hello </h1>
+        <p>Add something here</p>
+        <h2>Customise your shape</h2>
+        <div id="colours">
+            <p>Colour:</p>
+            <ul id="colour-options">
+                <li id="red" onclick="changeColour('red')">Red</li>
+                <li id="yellow" onclick="changeColour('yellow')">Yellow</li>
+                <li id="blue" onclick="changeColour('blue')">Blue</li>
+                <li id="green" onclick="changeColour('green')">Green</li>
+            </ul>
+        </div>
+        
+        <canvas id="canvas" width="400" height="400"></canvas>
+    </body>
+</html>
