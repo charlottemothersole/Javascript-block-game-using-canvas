@@ -124,14 +124,46 @@ window.addEventListener('keydown' , (event) => {
     }
     if(playerSquare.left >= obstacle.left - playerSquare.shapeWidth 
         && playerSquare.top <= obstacle.top + obstacle.obstacleHeight
+        // add if ps.top > ob.top + ob.height = LOSE
+            // add if ps.left >= ob.width = OK
+
+        //move this to separate if condition
         || playerSquare.left <= obstacle.left + obstacle.obstacleWidth
         && playerSquare.left >= obstacle.left
-        && playerSquare.top <= obstacle.top) {
-        console.log('playerSquare.left',playerSquare.left);
-        console.log('obstacle.left - playerSquare.shapeWidth',obstacle.left - playerSquare.shapeWidth);
-        console.log('playerSquare.top',playerSquare.top);
-        console.log('obstacle.top + obstacle.obstacleHeight',obstacle.top + obstacle.obstacleHeight);
-        drawLoseScreen();
+        && playerSquare.top <= obstacle.top) { 
+            console.log('here!-------------------------------')
+            console.log(playerSquare.left >= obstacle.left - playerSquare.shapeWidth )
+            console.log(playerSquare.top <= obstacle.top + obstacle.obstacleHeight)
+            console.log('or' )
+            console.log(playerSquare.left <= obstacle.left + obstacle.obstacleWidth )
+            console.log(playerSquare.left >= obstacle.left )
+            console.log(playerSquare.top <= obstacle.top )
+        //lose
+        if(playerSquare.top > obstacle.top + obstacle.obstacleHeight) {
+            //unless this
+            
+            if(playerSquare.left >= obstacle.obstacleWidth) {
+                //then ok to continue
+                
+                if (event.code === 'ArrowUp') {
+                    playerSquare.top -= 10;
+                    drawPlayerSquare()
+                    drawObstacle();
+                }  
+            }
+        }
+        else {
+            console.log('playerSquare.left',playerSquare.left);
+            console.log('playerSquare.left + playerSquare.shapeWidth',playerSquare.left + playerSquare.shapeWidth);
+            console.log('obstacle.left',obstacle.left);
+            console.log('obstacle.left + obstacle.obstacleWidth',obstacle.left + obstacle.obstacleWidth);
+            console.log('obstacle.left - playerSquare.shapeWidth',obstacle.left - playerSquare.shapeWidth);
+            console.log('playerSquare.top',playerSquare.top);
+            console.log('playerSquare.top + playerSquare.shapeHeight',playerSquare.top + playerSquare.shapeHeight);
+            console.log('obstacle.top + obstacle.obstacleHeight',obstacle.top + obstacle.obstacleHeight);
+            console.log('obstacle.top',obstacle.top);
+            drawLoseScreen();
+        }
     } else if (event.code === 'ArrowUp') {
         playerSquare.top -= 10;
         drawPlayerSquare()
