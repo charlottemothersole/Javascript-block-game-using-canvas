@@ -27,6 +27,9 @@ let obstacle = {
 const maxWidth = width - playerSquare.shapeWidth;
 const maxHeight = height - playerSquare.shapeHeight;
 
+//variable to show whether the move is valid or not
+let moveOk = 'yes';
+
 //default shape colour. Changes based on player choice
 let shapeColour = 'green';
 
@@ -62,6 +65,8 @@ function changeColour(colour) {
 function drawWinScreen() {
     //select canvas element
     const ctx = document.getElementById('canvas').getContext('2d');
+    //ensure canvas is clear and any old shapes removed
+    ctx.clearRect(0, 0, 400, 400);
     //set win screen style
     ctx.font = '48px serif';
     ctx.fillStyle = 'green';
@@ -79,29 +84,32 @@ function drawLoseScreen() {
 }
 
 //moves the shape across the canvas and calls win or lose function
-function move(e) {
-    //variable to show whether the move is valid or not
-    let moveOk = 'yes';
+function move(e) {    
     //if player shape intersects with obstacle on horizontal axis (from left or right side)
     if(playerSquare.left + playerSquare.shapeWidth >= obstacle.left &&
         playerSquare.left <= obstacle.left + obstacle.obstacleWidth) {
-        console.log('1st');
         // if shape also intersects with the obstacle on the vertical axis (from top or bottom)
         if(playerSquare.top <= obstacle.top + obstacle.obstacleHeight &&
             playerSquare.top + playerSquare.shapeHeight >= obstacle.top) {
-            console.log('2nd');
             //future moves become invalid and variable set to no
             moveOk = 'no';
             //player loses so display lose screen
             drawLoseScreen();
         }
     }
+    
     //move according to arrow key pressed and if move is valid
-    if(e.code === 'ArrowRight' && moveOk === 'yes') {
-        playerSquare.left += 10;
-        //must redraw shape and obstacle each time as board is cleared on movement
-        drawPlayerSquare()
-        drawObstacle();
+    if(e.code === 'ArrowRight' && moveOk === 'yes') { 
+        playerSquare.left += 10;   
+        drawPlayerSquare();
+        drawObstacle();   
+        // if shape reaches end of canvas display win screen
+        if(playerSquare.left >= width - playerSquare.shapeWidth) {
+            //future moves become invalid and variable set to no
+            moveOk = 'no';       
+            // pause for 2 seconds then display win screen to allow for showing shape at end of canvas;       
+            setTimeout(drawWinScreen, 200);     
+        } 
     } else if (e.code === 'ArrowLeft' && moveOk === 'yes') {        
         playerSquare.left -= 10;
         drawPlayerSquare()
