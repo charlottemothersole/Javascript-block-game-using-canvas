@@ -41,10 +41,12 @@ function drawPlayerSquare() {
 }
 
 function drawObstacle() {
+    //set obstacle colour and use position/dimensions from obstacle object
     ctx.fillStyle = 'purple';
     ctx.fillRect(obstacle.left, obstacle.top, obstacle.obstacleWidth, obstacle.obstacleHeight);
 }
 
+//initial drawing of shape and obstacle on game start
 drawPlayerSquare();
 drawObstacle();
 
@@ -57,7 +59,9 @@ function changeColour(colour) {
 
 //draws the winning screen
 function drawWinScreen() {
+    //select canvas element
     const ctx = document.getElementById('canvas').getContext('2d');
+    //set win screen style
     ctx.font = '48px serif';
     ctx.fillStyle = 'green';
     ctx.fillText('You win!', 10, 50);
@@ -67,28 +71,102 @@ function drawWinScreen() {
 function drawLoseScreen() {
     //ensure canvas is clear and any old shapes removed
     ctx.clearRect(0, 0, 400, 400);
+    //set lose screen style
     ctx.font = '48px serif';
     ctx.fillStyle = 'red';
     ctx.fillText('You lose!!', 10, 50);
 }
 
+//moves the shape across the canvas and calls win or lose function
+function move(e) {
+    //variable to show whether the move is valid or not
+    let moveOk = 'yes';
+    //if player shape intersects with obstacle on horizontal axis (from left or right side)
+    if(playerSquare.left + playerSquare.shapeWidth >= obstacle.left &&
+        playerSquare.left <= obstacle.left + obstacle.obstacleWidth) {
+        console.log('1st');
+        // if shape also intersects with the obstacle on the vertical axis (from top or bottom)
+        if(playerSquare.top <= obstacle.top + obstacle.obstacleHeight &&
+            playerSquare.top + playerSquare.shapeHeight >= obstacle.top) {
+            console.log('2nd');
+            //future moves become invalid and variable set to no
+            moveOk = 'no';
+            //player loses so display lose screen
+            drawLoseScreen();
+        }
+    }
+    //move according to arrow key pressed and if move is valid
+    if(e.code === 'ArrowRight' && moveOk === 'yes') {
+        playerSquare.left += 10;
+        //must redraw shape and obstacle each time as board is cleared on movement
+        drawPlayerSquare()
+        drawObstacle();
+    } else if (e.code === 'ArrowLeft' && moveOk === 'yes') {        
+        playerSquare.left -= 10;
+        drawPlayerSquare()
+        drawObstacle();
+    } else if (e.code === 'ArrowDown' && moveOk === 'yes') {
+        playerSquare.top += 10;
+        drawPlayerSquare()
+        drawObstacle();
+    } if (e.code === 'ArrowUp' && moveOk === 'yes') {
+        playerSquare.top -= 10;
+        drawPlayerSquare()
+        drawObstacle();
+    }  
+}
+
+//listen for keyboard button press
+window.addEventListener('keydown', move);
+
 
 
 //when arrow key is pressed, shape moves in that direction
-window.addEventListener('keydown' , (event) => {
-    //if player shape is to the left of the obstacle, continue
-    if(playerSquare.left + playerSquare.shapeWidth <= obstacle.left) {
-        //if shape is to the right of the obstacle, continue
-        if(playerSquare.left + playerSquare.shapeWidth >= obstacle.left + obstacle.obstacleWidth) {
-            //if shape is below the obstacle, continue
-            if(playerSquare.top >= obstacle.top + obstacle.obstacleHeight) {
-                // if shape is above the obstacle, continue
-                if(playerSquare.top + playerSquare.shapeHeight <= obstacle.top) {
-
-                }
-            }
-        }
-    }
+// window.addEventListener('keydown' , (event) => {
+//     //if player shape intersects with the obstacle on the horizontal axis, continue
+//     if(playerSquare.left + playerSquare.shapeWidth >= obstacle.left) {
+//         console.log('1st');
+//         // if shape intersects with the obstacle on the vertical axis
+//         if(playerSquare.top <= obstacle.top + obstacle.obstacleHeight) {
+//             console.log('2nd');
+//             drawLoseScreen();
+//         }
+        //if shape is to the right of the obstacle
+        // if(playerSquare.left + playerSquare.shapeWidth <= obstacle.left + obstacle.obstacleWidth) {
+        //     //if shape is below the obstacle, continue
+        //     console.log('3rd');
+        //     if(playerSquare.top + playerSquare.shapeHeight >= obstacle.top) {
+        //         if shape is above the obstacle, continue
+        //         console.log('3rd');
+        //         if(playerSquare.top <= obstacle.top + obstacle.obstacleHeight) {
+        //             console.log('4th');
+        //             drawLoseScreen();
+        //             console.log('5th');
+        //             ctx.clearRect(0, 0, 400, 400);
+        //             ctx.font = '48px serif';
+        //             ctx.fillStyle = 'red';
+        //             ctx.fillText('You lose!!', 10, 50);
+        //         }
+        //     }
+        // }
+    // }
+    // if(event.code === 'ArrowRight') {
+    //     playerSquare.left += 10;
+    //     drawPlayerSquare()
+    //     drawObstacle();
+    // } else if (event.code === 'ArrowLeft') {        
+    //     playerSquare.left -= 10;
+    //     drawPlayerSquare()
+    //     drawObstacle();
+    // } else if (event.code === 'ArrowDown') {
+    //     playerSquare.top += 10;
+    //     drawPlayerSquare()
+    //     drawObstacle();
+    // } if (event.code === 'ArrowUp') {
+    //     playerSquare.top -= 10;
+    //     drawPlayerSquare()
+    //     drawObstacle();
+    // }  
     // if(playerSquare.left >= obstacle.left - playerSquare.shapeWidth && playerSquare.top <= obstacle.top + obstacle.obstacleHeight) {
     //     console.log('playerSquare.left',playerSquare.left);
     //     console.log('obstacle.left - playerSquare.shapeWidth',obstacle.left - playerSquare.shapeWidth);
@@ -182,4 +260,4 @@ window.addEventListener('keydown' , (event) => {
     //     drawPlayerSquare()
     //     drawObstacle();
     // }  
-})
+// })
