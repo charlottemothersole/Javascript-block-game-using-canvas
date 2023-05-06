@@ -1,7 +1,7 @@
 body {
     background-color: aquamarine; /* page background color */
     color: darkblue; /* the text color */
-    font-family: Georgia, 'Times New Roman', Times, serif; /* the text font */
+    font-family: Arial, 'Times New Roman', Times, serif; /* the text font */
   }
 
   canvas {
@@ -12,20 +12,50 @@ body {
     list-style: none;
     display: flex;
     justify-content: space-between;
+    max-width: 400px;
+    padding: 0;
+  }
+
+  #colour-options > * {
+    padding: 5px;
+    border-radius: 5px;
+    min-width: 60px;
+    text-align: center;
   }
 
   #red {
-    color: red;
+    /* color: red; */
+    border: red solid 2px;    
+    
+  }
+  
+  #red:hover {
+    background-color: red;
   }
 
   #yellow {
-    color: yellow;
+    /* color: yellow; */
+    border: yellow solid 2px;
+  }
+
+  #yellow:hover {
+    background-color: yellow;
   }
 
   #blue {
-    color: blue;
+    /* color: blue; */
+    border: blue solid 2px;
+  }
+  
+  #blue:hover {
+    background-color: blue;
   }
 
   #green {
-    color: green;
+    /* color: green; */
+    border: green solid 2px;
+  }
+  
+  #green:hover {
+    background-color: green;
   }

@@ -55,6 +55,7 @@ drawObstacle();
 function changeColour(colour) {
     shapeColour = colour;
     drawPlayerSquare();
+    drawObstacle();
 }
 
 //draws the winning screen
