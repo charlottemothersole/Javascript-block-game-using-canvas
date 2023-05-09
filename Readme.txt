@@ -7,4 +7,5 @@ Added own modifications:
 - Add field obstacles for block to avoid
 
 To do
-- Lose screen firing incorrectly when block is beyond the obstacle but playerSquare.top is less than obstacle.obstacleHeight.
+- Add more obstacles
+- further customisation, maybe different shapes??                                             
